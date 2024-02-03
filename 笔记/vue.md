@@ -1,0 +1,58 @@
+---
+title: vue
+date: 2024-01-20 20:52:34
+tags:
+---
+
+# vue环境搭建
+
+1. node.js
+
+2. npm和yarn
+
+   安装node就会自带npm
+
+   yarn：npm install yarn-g（全局安装）
+
+3. 创建一个vite项目
+
+   yarn create vite
+
+4. vue-router
+
+   yarn add vue-router@4 --save
+5. Element-plus
+   
+   yarn add element-plus --save
+
+## vue环境搭建-搭建的坑
+
+- [yarn安装与使用&yarn : 无法加载文件...因为在此系统上禁止运行脚本_yarn命令加载资源-CSDN博客](https://blog.csdn.net/Imagirl1/article/details/122014743)
+
+# vscode插件
+
+1. xx
+
+
+
+# 第一章
+
+## 声明式渲染
+
+reactive和ref定义，在模板中使用
+
+
+
+
+
+# 第二章阶段案例- 学习计划表
+
+[VUE里面的export default 是什么-CSDN博客](https://blog.csdn.net/weixin_46129834/article/details/106425246)
+
+
+
+# 第五章 路由
+
+
+
+# vue老杜
