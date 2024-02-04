@@ -56,3 +56,33 @@ reactive和ref定义，在模板中使用
 
 
 # vue老杜
+
+
+
+# 动力云客
+
+做这个项目主要目的是， 
+
+- 练习vue和element-plus
+
+- 初步了解redis
+
+- mybatis-x插件的使用
+
+
+
+选项式api书写
+
+element-plus
+
+- 布局组件
+- 表单组件
+- 按钮组件
+- 样式书写 .tagname{ css-code }
+
+ts声明
+
+- declare module 'element-plus'
+
+- declare module 'axios'
+
