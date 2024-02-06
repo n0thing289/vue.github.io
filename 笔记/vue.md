@@ -67,7 +67,19 @@ reactive和ref定义，在模板中使用
 
 - 初步了解redis
 
-- mybatis-x插件的使用
+- mybatis-x插件, mybatis-plus的使用
+  - @JsonIgnore
+
+- lombok
+
+- security
+
+  - 权限分离
+  - security在 springboot3中的配置写法
+
+  - 登录接口的写法不一样
+
+- apifox和postman差不多
 
 
 
