@@ -81,6 +81,19 @@ reactive和ref定义，在模板中使用
 
 - apifox和postman差不多
 
+- springboot 热部署
+
+  - ```
+    //1
+    导入依赖， 2.3.1.X
+    yml配置
+    //2
+    idea设置
+    ```
+
+  - 
+
+
 
 
 选项式api书写
