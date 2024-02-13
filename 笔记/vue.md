@@ -22,8 +22,10 @@ tags:
 
    yarn add vue-router@4 --save
 5. Element-plus
-   
+
    yarn add element-plus --save
+
+6. yarn add @element-plus/icons-vue
 
 ## vue环境搭建-搭建的坑
 
