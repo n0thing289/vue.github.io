@@ -61,39 +61,7 @@ reactive和ref定义，在模板中使用
 
 
 
-# 动力云客
-
-做这个项目主要目的是， 
-
-- 练习vue和element-plus
-
-- 初步了解redis
-
-- mybatis-x插件, mybatis-plus的使用
-  - @JsonIgnore
-
-- lombok
-
-- security
-
-  - 权限分离
-  - security在 springboot3中的配置写法
-
-  - 登录接口的写法不一样
-
-- apifox和postman差不多
-
-- springboot 热部署
-
-  - ```
-    //1
-    导入依赖， 2.3.1.X
-    yml配置
-    //2
-    idea设置
-    ```
-
-  - 
+- - 
 
 
 
