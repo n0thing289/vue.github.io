@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>代办事项</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        body {
+            background-color: gray;
+        }
+
+        * {
+            padding: 0px;
+            list-style: none;
+
+        }
+
+        .myInput {
+            display: block;
+            margin: auto;
+            height: 50px;
+            width: 500px;
+            font-size: 25px;
+            background-color: wheat;
+        }
+
+        .myLi {
+            display: block;
+            margin: auto;
+            height: 50px;
+            width: 500px;
+            font-size: 25px;
+            background-color: wheat;
+            line-height: 49px;
+            position: relative;
+            border-bottom: 1px solid snow;
+        }
+
+        input[type="checkbox"] {
+            position: relative;
+            top: -2px;
+            left: 15px;
+            padding-left: 20px;
+            transform: scale(3);
+        }
+
+        .myLi span {
+            padding-left: 30px;
+        }
+
+        .delBtn {
+            display: none;
+            position: absolute;
+            right: 5px;
+            top: 17px;
+            transform: scale(1.5);
+        }
+
+        .myLi:hover .delBtn {
+            display: inline-block;
+        }
+
+        .completed {
+            color: grey;
+            text-decoration: line-through;
+        }
+
+        .toDoFooter {
+            display: block;
+            margin: auto;
+            height: 40px;
+            width: 500px;
+            font-size: 15px;
+            background-color: wheat;
+            line-height: 39px;
+            position: relative;
+        }
+
+        .fspan {
+            padding-left: 15px;
+        }
+
+        .toDoFooter a {
+            /* position: absolute;
+            right: 1px; */
+            color: grey;
+            text-decoration: none;
+        }
+
+        ul .toDoFooter button {
+            cursor: pointer;
+            background-color: wheat;
+            padding: 7px;
+            border: 1px solid grey;
+        }
+
+        .btnColor {
+            display: inline-block;
+            
+            width: max-content;
+            height: 10px;
+            background-color: rgb(148, 207, 148);
+            
+        }
+        .btnMargin{
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" class="myInput" v-model.trim="inputStr" @keydown.enter="addToDo($event)" />
+        <ul>
+            <li v-for="(toDo, index) in filtedToDos" :key="toDo.id" class="myLi">
+                <input type="checkbox" @click="changeState(toDo)" v-model:value="toDo.completed">
+                <span :class="{'completed':toDo.completed}">{{toDo.task}}</span>
+                <button class="delBtn" @click="delToDo(index)">X</button>
+            </li>
+            <li class="toDoFooter" v-if="toDoArray.length>0">
+                <span class="fspan">{{toDoArray.length}} items left</span>
+                <span style="margin-left: 9%;">
+                    <a href="#/all" class="btnMargin" :class="{btnColor: showType==='all'}">All</a>
+                    <a href="#/active" class="btnMargin" :class="{btnColor: showType==='active'}">Active</a>
+                    <a href="#/completed" class="btnMargin" :class="{btnColor: showType==='completed'}">Completed</a>
+                </span>
+                <a href="javascript:void(0);" @click="clearCompleted()" style="margin-left: 26px;">Clear completed</a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                inputStr: '',
+                toDoArray: [],
+                showType: '',
+                id: 0,
+                btnColor: 'green'
+            },
+            methods: {
+                addToDo(event) {
+                    // console.log(event)
+                    if(this.inputStr.length < 1){
+                        alert("请输入内容")
+                        return
+                    }
+                    //将输入的事件，存入array
+                    let obj = {
+                        id: this.id++,
+                        task: this.inputStr,
+                        // active: true,
+                        completed: false
+                    }
+                    this.toDoArray.push(obj)
+                    //need clear the inputStr
+                    this.inputStr = ''
+                },
+                delToDo(index) {
+                    // console.log(index)
+                    //reactively delete array el
+                    this.toDoArray.splice(index, 1)
+                },
+                changeState(toDo) {
+                    // console.log(toDo)
+                    // toDo.active = !toDo.active
+                    toDo.completed = !toDo.completed
+                },
+                clearCompleted() {
+                    this.toDoArray.forEach((toDo, index) => {
+                        if (toDo.completed === true) {
+                            this.toDoArray.splice(index, 1)
+                        }
+                    })
+                },
+                onHashChange() {
+                    console.log(window.location.hash);
+                    let hash = window.location.hash
+                    this.showType = hash.split("/")[1]
+                }
+            },
+            computed: {
+                filtedToDos() {
+                    if (this.showType === 'active') {
+                        return this.toDoArray.filter((toDo, index) => {
+                            return toDo.completed !== true
+                        })
+                    }
+                    else if (this.showType === 'completed') {
+                        return this.toDoArray.filter((toDo, index) => {
+                            return toDo.completed === true
+                        })
+                    } else {
+                        return this.toDoArray
+                    }
+
+                }
+            },
+            mounted() {
+                window.addEventListener('hashchange', this.onHashChange)
+                this.onHashChange()
+            }
+        })
+    </script>
+</body>
+
+</html>

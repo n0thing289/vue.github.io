@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{"过滤器"}}</h1>
+        商品的价格(computed): {{afterPrice}} <br>
+        商品的价格2(methods): {{afterPrice2()}} <br>
+        商品的价格3(过滤器): {{price | afterPrice3()}} <br>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                price:'66'
+            },
+            methods:{
+                afterPrice2() {
+                    let price = this.price;
+                    if (price == null || price == '' || price == undefined) {
+                        price = "-"
+                    }
+                    return price
+                }
+            },
+            computed:{
+                afterPrice(){
+                    let price = this.price;
+                    if(price == null || price =='' || price == undefined){
+                        price = "-"
+                    }
+                    return price 
+                }
+            },
+            filters:{
+                afterPrice3(val) {
+                    let price = val;
+                    if (price == null || price == '' || price == undefined) {
+                        price = "-"
+                    }
+                    return price
+                }
+            }
+        })
+    </script>
+</body>
+</html>

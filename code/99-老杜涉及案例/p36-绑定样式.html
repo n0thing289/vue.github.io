@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .back{
+            /* background-color: aqua;
+            color: blueviolet; */
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+        .active{
+            background-color: green;
+        }
+        .text-danger{
+            color:red
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>样式绑定</h1>
+        <div>
+            <h3>绑定字符串形式</h3>
+            <div v-bind:class="backClass">
+                测试第一个, 绑定class属性
+            </div>
+            
+            <div v-bind:style="backStyle">
+                测试第二个, 绑定style(行内式)
+            </div>
+        </div>
+        <div>
+            <h3>绑定数组形式</h3>
+            <div v-bind:class="backClassArray">
+                测试第三个, 绑定class属性(数组形式)
+            </div>
+        </div>
+        <div>
+            <h3>绑定对象形式</h3>
+            <div v-bind:class="backClassObj">
+                测试第四个个, 绑定class属性(对象形式)
+            </div>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                backClass:'back',
+                backStyle:'background-color:red',
+                backClassArray:['back','active','text-danger'],
+                backClassObj:{
+                    back:true,
+                    active:true,
+                    'text-danger':true
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>

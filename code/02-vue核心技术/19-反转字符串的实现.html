@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        输入的信息：<input v-model:value="info" /><br>
+        反转后的信息: {{reverseInfo(info)}}<br>
+        反转后的信息: {{reverseInfo(info)}}<br>
+        反转后的信息: {{reverseInfo(info)}}<br>
+        反转后的信息: {{reverseInfo(info)}}<br>
+    </div>
+    <!-- 
+        目前这样浪费性能,值是一样的,但是你这样写却调用了函数,函数又算了好几遍
+     -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: "计算属性-反转字符串案例",
+                info: ''
+            },
+            methods: {
+                reverseInfo(val) {
+                    return val.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

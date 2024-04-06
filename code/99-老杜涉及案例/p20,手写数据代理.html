@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/myVue.js"></script>
+</head>
+
+<body>
+
+    <script>
+        /**
+         * 实现效果, 通过代理对象访问数据
+         * 
+         */
+        let target111 = {
+            data: {
+                username: 'root',
+                password: '111',
+                sex: '1'
+            }
+
+        }
+
+        let proxy111 = {}
+
+        //
+        const x = function (proxyObj, optionObj) {
+            //data
+            for (propertyName in optionObj.data) {
+                console.log(propertyName + "=" + optionObj.data[propertyName])
+                Object.defineProperty(proxyObj, propertyName, {
+                    //value, writable, enumrable, configurable, set() get()
+                    get(){
+                        console.log(propertyName);
+                        console.log(optionObj);
+                        console.log(optionObj.data);
+                        console.log(optionObj.data[propertyName])
+                        return optionObj.data[propertyName]
+                    },
+                    set(val){
+                        optionObj.data[propertyName] = val
+                    }
+                })
+            }
+        }
+
+        //x(proxy111, target111)
+        // const vm = new Vue(target111)
+        
+
+        //测试methods
+        const target222 = {
+            data: {
+                username: 'root',
+                password: '111',
+                sex: '1'
+            },
+            methods:{
+                sayHello:function(){
+                    console.log("Hello myVue!");
+                }
+            }
+        }
+        const vm2 = new Vue(target222)
+    </script>
+</body>
+
+</html>

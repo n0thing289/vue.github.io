@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <span>序号</span> <span>名字</span> <span>价格</span>
+            <li v-for="good,index in goods" :key="good.id">
+                {{good.id+1}} {{good.name}} {{good.price | filterPrice}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                goods:[
+                    {id:0,name:'排插',price:'10'},
+                    {id:1,name:'电脑',price:'19'},
+                    {id:2,name:'cpu',price:''},
+                    {id:3,name:'gpu',price:null},
+                ]
+            },
+            filters:{
+                filterPrice(price){
+                    if(price === null || price === '' || price === undefined){
+                        return "-"
+                    }
+                    return price
+                }
+            }
+        })
+    </script>
+</body>
+</html>

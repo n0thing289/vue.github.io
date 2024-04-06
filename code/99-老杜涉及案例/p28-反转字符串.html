@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <input v-model:value="rawStr"/> <br> <br>
+        <!-- 
+            第一种方式--直接写表达式
+            缺点: 直接在插值语法中写了比较复杂的逻辑,以至于不能一时看出意图
+        -->
+        反转后的字符串: {{rawStr.split('').reverse().join('')}}<br> <br>
+        <!-- 
+            第二种方式--函数封装
+            优点: 相比第一种更加直观
+            缺点: 和第一种方式一样,如果有多个,函数被多次执行, 但是结果都是一样的,浪费性能
+         -->
+        反转后的字符串: {{myReberse()}}<br> <br>
+        <!-- 
+            第三种方式--使用computed
+            优点: 只有计算属性关联的data变化, 才会去执行get逻辑. 如果重复使用,属性没有变化,不走get,走缓存
+         -->
+        反转后的字符串(使用computed): {{reverseStr}}<br> <br>
+        反转后的字符串(使用computed): {{reverseStr}}<br> <br>
+        反转后的字符串(使用computed): {{reverseStr}}<br> <br>
+        反转后的字符串(使用computed): {{reverseStr}}<br> <br>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'反转字符串',
+                rawStr:''
+            },
+            methods:{
+                myReberse(){
+                    return this.rawStr.split('').reverse().join('')
+                }
+            },
+            computed:{
+                //原始形式
+                reverseStr: {
+                    get: function(){
+                        //页面用了四次,才打印了这一句,说明只有更新后data后第一次调用, 后续都是走缓存
+                        console.log("计算属性reverseStr 的get 执行了");
+                        return this.rawStr.split('').reverse().join('')
+                    },
+                    set:function(){
+
+                    }
+                },
+                //第一个简化, 对象中可以简化:function
+                //第二个简化, 计算属性很少使用set,来修改. 因此可以省略set函数 直接写为最简形式 计算属性名(){return something}
+                //最间形式
+                // reverseStr(){
+                //     return this.rawStr.split('').reverse().join('')
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

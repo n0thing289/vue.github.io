@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静态组件先实现,不分模块</title>
+    <link rel="stylesheet" href="./BugStatic.css">
+    <script src="../../../../js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="flex">
+            <!-- BugHeader -->
+            <div class="BugHeader">
+                <input v-model.trim="bugInputStr" @keydown.enter="saveOneBug()"></input>
+                <button @click="saveOneBug()">保存</button>
+            </div> <br>
+            <!-- BugList -->
+            <!-- BugItem -->
+            <div class="BugListAndItem">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><span>全选 </span><input type="checkbox" @click="toggleAll()" v-model="toggleAllValue"
+                                    :disabled="checkBoxDisable"></th>
+                            <th>bug描述</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="bugItem,index in bugList" :key="bugItem.id">
+                            <td><input type="checkbox" v-model="bugItem.isDone"></td>
+                            <td><span>{{bugItem.describe}}</span></td>
+                            <td><button @click="deleteOneBug(index)">删除</button></td>
+                        </tr>
+                        <!-- <tr><td><input type="checkbox" name="" id=""></td> <td><span>Bug信息描述2</span></td> <td><button>删除</button></td></tr>
+                        <tr><td><input type="checkbox" name="" id=""></td> <td><span>Bug信息描述3</span></td> <td><button>删除</button></td></tr> -->
+                    </tbody>
+                </table>
+            </div> <br>
+            <!-- BugFooter -->
+            <div class="BugFooter">
+                <button @click="clearByDone()">清除已解决</button>
+                <span>当前Bug总量{{bugList.length}}个,已解决{{countCompleted}}个</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                bugInputStr: '',
+                id: 0,
+                bugList: [],
+                toggleAllValue: false,
+                countCompleted: 0
+            },
+            methods: {
+                saveOneBug() {
+                    let bugItem = {
+                        id: this.id++,
+                        describe: this.bugInputStr,
+                        isDone: false
+                    }
+                    this.bugList.push(bugItem)
+                    this.bugInputStr = ''
+                },
+                deleteOneBug(index) {
+                    this.bugList.splice(index, 1)
+                },
+                toggleAll() {
+                    let flag = 0
+                    this.bugList.forEach(element => {
+                        if (element.isDone === false) {
+                            element.isDone = !element.isDone
+                            flag++
+                        }
+                    });
+                    // 如果都选了, 再点全选直接取反
+                    if (flag === 0) { this.bugList.forEach(element => { element.isDone = !element.isDone }) }
+
+                },
+                clearByDone() {
+                    this.bugList = this.bugList.filter((e) => {
+                        if(e.isDone === true){
+                            this.countCompleted++//统计已解决的bug数
+                        }
+                        return e.isDone === false//留下没解决得, 解决得会被删掉
+                    })
+                    this.toggleAllValue = false
+                }
+            },
+            computed: {
+                checkBoxDisable() {
+                    return this.bugList.length === 0 ? true : false
+                }
+            },
+            watch: {
+                bugList: {
+                    deep: true,
+                    handler(newList, oldList) {
+                        let isDoneListLength = newList.filter((e) => {
+                            return e.isDone === true
+                        }).length
+                        this.toggleAllValue = isDoneListLength === newList.length && newList.length > 0 ? true : false
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

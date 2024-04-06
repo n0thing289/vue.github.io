@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>代办事项</title>
+	<script src="../js/vue.js"></script>
+	<style>
+		body{
+			background-color: gray;
+		}
+		*{
+			padding: 0px;
+			list-style: none;
+			
+		}
+		.myInput{
+			display: block;
+			margin:auto;
+			height:50px;
+			width:500px;
+			font-size: 25px;
+			background-color: wheat;
+		}
+		.myLi{
+			display: block;
+			margin:auto;
+			height:50px;
+			width:500px;
+			font-size: 25px;
+			background-color: wheat;
+			line-height: 49px;
+			position: relative;
+			border-bottom: 1px solid snow;
+		}
+		input[type="checkbox"]{
+			position: relative;
+			top: -2px;
+			left: 15px;
+			padding-left: 20px;
+			transform: scale(3);
+		}
+		.myLi span{
+			padding-left: 30px;
+		}
+		.delBtn{
+			display: none;
+			position: absolute;
+			right:5px;
+			top:17px;
+			transform: scale(1.5);
+		}
+		.myLi:hover .delBtn{
+			display: inline-block;
+		}
+		.completed{
+			color: grey;
+			text-decoration: line-through;
+		}
+		.toDoFooter{
+			display: block;
+			margin:auto;
+			height:40px;
+			width:500px;
+			font-size: 15px;
+			background-color: wheat;
+			line-height: 39px;
+			position: relative;
+		}
+		.toDoFooter span{
+			padding-left: 15px;
+		}
+		.toDoFooter a{
+			position: absolute;
+			right: 1px;
+			color: grey;
+		}
+		ul .toDoFooter button{
+			cursor: pointer;
+			background-color: wheat;
+			padding: 7px;
+			border: 1px solid grey;
+		}
+		.btnState{
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="text" class="myInput" v-model="inputStr" @keydown.enter="addToDo($event)"/>
+		<ul >
+			<li v-for="(toDo, index) in filtedToDos" :key="toDo.id" class="myLi">
+				<input type="checkbox" @click="changeState(toDo)" v-model:value="toDo.completed">
+				<span :class="{'completed':toDo.completed}">{{toDo.task}}</span>
+				<button class="delBtn" @click="delToDo(index)">X</button>
+			</li>
+			<li class="toDoFooter" v-if="toDoArray.length>0">
+				<span>{{toDoArray.length}} items left</span>
+				<span style="display:inline-block; margin: auto;" @click="changeBtnState($event)">
+					<button @click="showType='all'">All</button>
+					<button @click="showType='active'">Active</button>
+					<button @click="showType='completed'">Completed</button>
+				</span>
+				
+				<a href="javascript:void(0);" @click="clearCompleted()">Clear completed</a>
+			</li>
+		</ul>
+	</div>
+	<script>
+		const vm = new Vue({
+			el:'#app',
+			data:{
+				inputStr:'',
+				toDoArray:[],
+				showType:'all',
+				id:0,
+				btnColor:'green'
+			},
+			methods:{
+				addToDo(event){
+					// console.log(event)
+					//将输入的事件，存入array
+					let obj = {
+						id:this.id++,
+						task:this.inputStr,
+						active:true,
+						completed:false
+					}
+					this.toDoArray.push(obj)
+					//need clear the inputStr
+					this.inputStr = ''
+				},
+				delToDo(index){
+					// console.log(index)
+					//reactively delete array el
+					this.toDoArray.splice(index,1)
+				},
+				changeState(toDo){
+					console.log(toDo)
+					toDo.active = !toDo.active
+					toDo.completed = !toDo.completed
+				},
+				clearCompleted(){
+					this.toDoArray.forEach((toDo, index)=>{
+						if(toDo.completed === true){
+							this.toDoArray.splice(index,1)
+						}
+					})
+				},
+				changeBtnState(event){
+					//清除其他按钮的颜色
+					// event.srcElement.parentNode === event.srcElement.parentElement true
+					//
+					if(event.srcElement.nodeName === 'BUTTON'){
+						//console.log(event);//.srcElement.parentNode
+						let spanChildren = event.srcElement.parentNode.children
+						for (var i = 0; i < spanChildren.length; i++) {
+							// console.log(spanChildren[i]);
+							spanChildren[i].style.backgroundColor = ''
+						}
+						event.srcElement.style.backgroundColor = this.btnColor
+					}
+					// console.log(event)
+				}
+			},
+			computed:{
+				filtedToDos(){
+					if(this.showType==='active'){
+						return this.toDoArray.filter((toDo, index)=>{
+							return toDo.active === true
+						})
+					}
+					else if(this.showType==='completed'){
+						return this.toDoArray.filter((toDo, index)=>{
+							return toDo.completed === true
+						})
+					}else{
+						return this.toDoArray
+					}
+					
+				}
+			}
+		})
+	</script>
+</body>
+</html>

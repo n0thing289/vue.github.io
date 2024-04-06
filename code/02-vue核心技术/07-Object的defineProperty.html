@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    <script>
+        let phone1 = {
+            color: "red",
+            get function() {
+                console.log("getter方法执行了");
+            },
+            set function(param) {
+                console.log("setter方法执行了");
+            }
+        }
+        //es5新特性, set get关键字
+        let phone = {
+            color: "red",
+            get color() {
+                console.log("getter方法执行了");
+                return this.color
+            },
+            set color(param) {
+                console.log("setter方法执行了");
+                this.color = param
+            }
+        }
+        //es5新特性 Object.defineProperty(哪个对象,哪个属性,{配置项value,writable,set:function(param){},get:function(){}})
+
+        
+    </script>
+</body>
+
+</html>

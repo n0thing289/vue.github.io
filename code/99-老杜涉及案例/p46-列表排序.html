@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <span>序号</span> <span>名字</span> <span>能量值</span>
+            <li v-for="hero,index in sortedHeros" :key="hero.id">
+                {{hero.id+1}} {{hero.name}} {{hero.power}}
+            </li>
+        </ul>
+        <button @click="sortType='sx'">能量值升序</button>
+        <button @click="sortType='jx'">能量值降序</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                heros: [
+                    { id: 0, name: '李白', power: 100 },
+                    { id: 1, name: '张飞', power: 200 },
+                    { id: 2, name: '关羽', power: 150 },
+                    { id: 3, name: '曹操', power: 350 }
+
+                ],
+                sortType: ''
+            },
+            computed: {
+                sortedHeros() {
+                    const arr = this.heros
+                    console.log("ok");
+                    if (this.sortType === 'sx') {
+                        arr.sort((a, b) => {
+                            return a.power - b.power
+                        })
+                    } else if (this.sortType === 'jx') {
+                        arr.sort((a, b) => {
+                            return b.power - a.power
+                        })
+                    }
+                    return arr
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

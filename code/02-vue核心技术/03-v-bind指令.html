@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p v-text="title">默认数据:我是p标签</p>
+        <img v-bind:src="imgPath" />
+        <!-- <input class="myInput" type="text" value="" /> -->
+    </div>
+    <script>
+        // window.onload = ()=>{
+        //     let input = document.querySelector(".myInput")
+        //     input.addEventListener("input", () => {
+        //         console.log(input.value);
+        //     })
+        // }
+        new Vue({
+            el: '#app',
+            data: {
+                title: "给一个路径,我能把图片显示!",
+                imgPath: ""//https://tse1-mm.cn.bing.net/th/id/OIP-C.4TyMqrPwPVTM_dObV2VZGwHaKs?w=203&h=293&c=7&r=0&o=5&pid=1.7
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js">
+
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <!-- //3. -->
+        <userlist/>
+    </div>
+    <script>
+        //1.
+        const myFirstComponent = Vue.extend({
+            template: `
+            <ul>
+                <li v-for="(item, index) in users" :key="item.id">
+                    name: {{item.name}}
+                </li>
+            </ul>
+            `,
+            data() {
+                return {
+                    users: [
+                        { id: '001', name: 'jack' },
+                        { id: '002', name: 'lucy' },
+                        { id: '003', name: 'james' }
+                    ]
+                }
+            }
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '第一个组件'
+            },
+            //2.
+            components:{
+                userlist: myFirstComponent
+            }
+        })
+    </script>
+</body>
+
+</html>
